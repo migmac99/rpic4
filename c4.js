@@ -3,7 +3,7 @@ var log_dependencies = true;
 
 if (logging) {
     if (log_dependencies) {
-        console.log('\x1b[41m' + '-->' + '\x1b[43m' + 'express' + '\x1b[0m');
+        console.log('\x1b[31m' + '-->' + '\x1b[33m' + 'express' + '\x1b[0m');
     }
     console.log('.'); //Start Spacer
     console.log('+==========================+');
