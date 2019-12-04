@@ -21,3 +21,9 @@ For crontab config do:
  @reboot home/pi/github/rpic4/BOOT/startup.sh
  ```
  
+
+
+
+
+# Ignore this (Dev related stuff)
+Logging colors here --> https://stackoverflow.com/questions/9781218/how-to-change-node-jss-console-font-color
