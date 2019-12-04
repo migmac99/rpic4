@@ -51,11 +51,15 @@ Object.keys(ifaces).forEach(function(ifname) {
 //START HTML SERVER
 app.use(express.static(__dirname + "/html")); //Prevents MIME TYPE error by making html directory static and therefore usable
 
+
 app.get('/', function(req, res) {
-    res.sendFile('html/index.html', { root: __dirname })
     res.statusCode = 200;
+    res.sendFile('html/index.html', { root: __dirname })
     res.setHeader('Content-Type', 'text/html');
+    res.end();
 });
+
+app.get('*', function(req, res) { res.redirect('/'); }); //Redirects any incorrect links to main page
 
 app.listen(PORT, () => {
     console.log(`C4 Server running on port ${PORT}.`);
