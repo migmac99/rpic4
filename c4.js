@@ -38,19 +38,27 @@ Object.keys(ifaces).forEach(function(ifname) {
 });
 
 //START HTML SERVER
-
 const http = require('http');
 const PORT = 80;
 
-const server = http.createServer((req, res) => {
-    res.statusCode = 200;
-    res.setHeader('Content-Type', 'text/plain');
-    res.end('Hello dev.to!\n');
+var app = express();
+app.get('/', function(req, res) {
+    res.sendFile('html/index.html', { root: __dirname })
 });
 
-server.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}.`);
+app.listen(PORT, () => {
+    console.log(`C4 Server running on port ${PORT}.`);
 });
+
+// const server = http.createServer((req, res) => {
+//     res.statusCode = 200;
+//     res.setHeader('Content-Type', 'text/plain');
+//     res.end('Hello dev.to!\n');
+// });
+
+// server.listen(PORT, () => {
+//     console.log(`Server running on port ${PORT}.`);
+// });
 
 //Extra Logging
 
