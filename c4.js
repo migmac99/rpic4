@@ -47,7 +47,7 @@ const PORT = 80;
 
 var app = express();
 
-app.use(express.static(path.join(__dirname, 'html')));
+app.use(express.static(path.join(__dirname, "/html")));
 
 app.get('/', function(req, res) {
     res.sendFile('html/index.html', { root: __dirname })
