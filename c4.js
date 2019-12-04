@@ -45,12 +45,14 @@ Object.keys(ifaces).forEach(function(ifname) {
 const http = require('http');
 const PORT = 80;
 
-var app = express();
+var app = http.createServer(express());
 
 app.get('/', function(req, res) {
     res.sendFile('html/index.html', { root: __dirname })
     res.statusCode = 200;
     res.setHeader('Content-Type', 'text/html');
+
+    app.use(express.static(path.join(__dirname, 'html')));
 });
 
 app.listen(PORT, () => {
