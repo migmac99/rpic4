@@ -49,6 +49,9 @@ var app = express();
 
 app.get('/', function(req, res) {
     res.sendFile('html/index.html', { root: __dirname })
+    res.statusCode = 200;
+    res.setHeader('Content-Type', 'text/plain');
+    //res.use(express.static(path.join(__dirname,"public")));
 });
 
 app.listen(PORT, () => {
