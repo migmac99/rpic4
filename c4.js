@@ -11,7 +11,11 @@ if (logging) {
 
 //VARIABLES
 var public_ipv4;
+
 var os = require('os');
+var express = require('express');
+var fs = require('fs');
+
 var ifaces = os.networkInterfaces();
 
 //LOCAL IPV4 DETECTION
@@ -42,6 +46,7 @@ const http = require('http');
 const PORT = 80;
 
 var app = express();
+
 app.get('/', function(req, res) {
     res.sendFile('html/index.html', { root: __dirname })
 });
