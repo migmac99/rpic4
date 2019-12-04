@@ -45,7 +45,7 @@ Object.keys(ifaces).forEach(function(ifname) {
 const http = require('http');
 const PORT = 80;
 
-var app = http.createServer(express());
+var app = express();
 
 app.get('/', function(req, res) {
     res.sendFile('html/index.html', { root: __dirname })
