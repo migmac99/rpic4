@@ -47,12 +47,12 @@ const PORT = 80;
 
 var app = express();
 
+app.use(express.static(path.join(__dirname, 'html')));
+
 app.get('/', function(req, res) {
     res.sendFile('html/index.html', { root: __dirname })
     res.statusCode = 200;
     res.setHeader('Content-Type', 'text/html');
-
-    app.use(express.static(path.join(__dirname, 'html')));
 });
 
 app.listen(PORT, () => {
