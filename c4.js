@@ -1,3 +1,16 @@
+var logging = true;
+
+if (logging){
+    console.log('.'); //Start Spacer
+    console.log('+==========================+');
+    console.log('|  Starting C4 by ' + '\x1b[36m%s\x1b[0m', 'AllTWay' + '\x1b[0m', ' |');
+    console.log('+==+=======================+');
+} else {
+    console.log('Starting C4 by ' + '\x1b[36m%s\1', 'AllTWay' + '\x1b[0m');
+}
+
+//START HTML SERVER
+
 const http = require('http');
 
 const PORT = 0080;
@@ -13,7 +26,9 @@ server.listen(PORT, () => {
 });
 
 
+//LOCAL IPV4 DETECTION
 
+var public_ipv4;
 
 'use strict';
 
@@ -31,14 +46,21 @@ Object.keys(ifaces).forEach(function (ifname) {
 
 	if (alias >= 1) {
 	    // this single interface has multiple ipv4 addresses
-	    console.log(ifname + ':' + alias, iface.address);
+	    //console.log(ifname + ':' + alias, iface.address);
 	} else {
 	    // this interface has only one ipv4 address
-	    console.log(ifname, iface.address);
+	    //console.log(ifname, iface.address);
+	    public_ipv4 = iface.address;
 	}
 	++alias;
     });
 });
 
-// en0 192.168.1.101
-// eth0 10.0.0.101
+//Extra Logging
+
+if (logging){
+    console.log('   |');
+    console.log('   +--=[' + '\x1b[47m\x1b[30m' + ' Public IP ' + '\x1b[0m' + ']=--> ' + '\x1b[32m' + public_ipv4 + '\x1b[0m');
+    console.log('   |');
+    console.log('   .'); //End Spacer
+}
