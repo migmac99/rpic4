@@ -8,7 +8,9 @@ This creates a node.js server
 - Express (html handling and such) ```npm install express --save```
 - Express-Favicon (for favicon in website) ```npm install express-favicon --save```
 
-- Uses https://imti.co/iot-wifi/
+# Installed on RPI (for complete headless build)
+- PM2
+- https://imti.co/iot-wifi/
 
 # BOOT folder
 The boot folder has a file called startup.sh which is supposed to be run with crontab.
