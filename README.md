@@ -9,6 +9,7 @@ This creates a node.js server
 - Express-Favicon (for favicon in website) ```npm install express-favicon --save```
 
 # Installed on RPI (for complete headless build)
+- hostapd & dnsmasq ```sudo apt install dnsmasq hostapd```
 - PM2
 - https://imti.co/iot-wifi/
 
