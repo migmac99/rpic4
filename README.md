@@ -5,8 +5,8 @@ This creates a node.js server
 
 # Dependencies
 - Node.js
-- Express (for node) ```npm install express --save```
-- Express-Favicon ```npm install express-favicon --save```
+- Express (html handling and such) ```npm install express --save```
+- Express-Favicon (for favicon in website) ```npm install express-favicon --save```
 
 # BOOT folder
 The boot folder has a file called startup.sh which is supposed to be run with crontab.
