@@ -9,9 +9,12 @@ This creates a node.js server
 - Express-Favicon (for favicon in website) ```npm install express-favicon --save```
 
 # Installed on RPI (for complete headless build)
+- Used this as a guide https://www.youtube.com/watch?v=5BkfztZ0pOE
+  - ```sudo apt-get install isc-dhcp-server```
 - hostapd & dnsmasq ```sudo apt install dnsmasq hostapd```
 - PM2
 - https://imti.co/iot-wifi/
+
 
 # BOOT folder
 The boot folder has a file called startup.sh which is supposed to be run with crontab.
