@@ -5,6 +5,7 @@ if (logging) {
     if (log_dependencies) {
         console.log('\x1b[31m' + 'Dependencies');
         console.log('\x1b[31m' + '--> ' + '\x1b[33m' + 'Express' + '\x1b[0m');
+        console.log('\x1b[31m' + '--> ' + '\x1b[33m' + 'Express-Favicon' + '\x1b[0m');
     }
     console.log('.'); //Start Spacer
     console.log('+==========================+');
@@ -19,8 +20,10 @@ var private_ipv4; //Server can be accessed through this ip if in the same networ
 const PORT = 80; //C4 server port [80 is default for web]
 
 var os = require('os');
-var express = require('express');
 var fs = require('fs');
+
+var express = require('express');
+var favicon = require('express-favicon');
 
 var ifaces = os.networkInterfaces();
 var app = express();
@@ -51,6 +54,7 @@ Object.keys(ifaces).forEach(function(ifname) {
 //START HTML SERVER
 app.use(express.static(__dirname + "/html")); //Prevents MIME TYPE error by making html directory static and therefore usable
 
+app.use(favicon(__dirname + '/html/assets/images/c4.png')); //Favicon handler
 
 app.get('/', function(req, res) {
     res.statusCode = 200;
