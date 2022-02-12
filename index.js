@@ -13,8 +13,8 @@ function write(err) {
     if (err) throw err
     gpio.write(7, false, function(err) {
         if (err) throw err
-        LogCheck()
-        console.log('Written to pin')
+        LogCheck('Power to pin [7]')
+        // console.log('Written to pin')
     });
 }
 
