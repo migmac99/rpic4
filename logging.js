@@ -36,14 +36,14 @@ let colors = {
  * @param ShowDependencies bool | Defaults to false
  */
 function LogRunning(ShowDependencies = false) {
-    console.log(`+====================================+`);
+    console.log(`+==========================+`);
     console.log(`|  Starting ${colors.magenta}${pjson.name}${colors.reset} by ${colors.cyan}AllTWay${colors.reset}  |`);
     if (ShowDependencies) {
-        console.log(`+==+=================================+`);
+        console.log(`+==+=======================+`);
         console.log(`|  ${colors.red}|${colors.reset}`);
         LogDependencies();
     } else {
-        console.log(`+====================================+`);
+        console.log(`+==========================+`);
         console.log(`|`);
     }
 }

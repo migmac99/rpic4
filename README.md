@@ -8,3 +8,6 @@ This creates a node.js server
 - Install ```npm install```
 
 
+# DEV Auto Restart on Pull
+- Install nodemon ```npm install nodemon --global```
+- Then start server with ```nodemon index.js```
