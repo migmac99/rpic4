@@ -8,6 +8,16 @@ This creates a node.js server
 - Install ```npm install```
 
 
+# Install this
+- ```sudo apt-get install -y python-smbus```
+- ```sudo apt-get install -y i2c-tools```
+- Enable I2C through ```sudo raspi-config``` > ```Advanced Options``` > ```I2C```
+- Test I2C by doing ```sudo i2cdetect -y 1```
+
 # DEV Auto Restart on Pull
 - Install nodemon ```npm install nodemon --global```
 - Then start server with ```nodemon index.js```
+
+
+
+// https://www.youtube.com/watch?v=WHQOA0hEdoQ

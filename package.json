@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "rpi-gpio": "^2.1.7"
+    "rpi-gpio": "^2.1.7",
+    "i2c-bus": "^5.2.2"
   }
 }

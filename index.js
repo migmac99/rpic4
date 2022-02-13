@@ -1,22 +1,24 @@
 const { LogRunning, LogCheck, LogCustom, colors } = require('./logging');
 
-// This example shows how to setup the pin for write mode with the default state as "on". Why do this?
-// It can sometimes be useful to reverse the default initial state due to wiring or uncontrollable circumstances.
+const LCD = require('raspberrypi-liquid-crystal');
 
-var gpio = require('rpi-gpio')
+const lcd = new LCD(
+    1, // I2C bus
+    0x27, // Address (sudo i2cdetect -y 1)
+    16, // Columns
+    2 // Rows
+);
 
 LogRunning();
 
-gpio.setup(7, gpio.DIR_HIGH, write)
+lcd.beginSync();
+LogCheck('LCD Connected!')
 
-function write(err) {
-    if (err) throw err
-    gpio.write(7, false, function(err) {
-        if (err) throw err
-        LogCheck('Power to pin [7]')
-        // console.log('Written to pin')
-    });
-}
+lcd.clearSync();
+lcd.printSync('C4 by AllTWay');
+lcd.setCursorSync(0, 1);
+lcd.printSync('8Pirats');
+LogCustom('  PRINT ', 'debug', 'Printing!')
 
 
 // LogCustom('  PAGE  ', 'debug', 'User request for /widget')
