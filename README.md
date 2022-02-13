@@ -19,5 +19,7 @@ This creates a node.js server
 - Then start server with ```nodemon index.js```
 
 
+# Read more about the dependencies used here
+https://www.npmjs.com/package/raspberrypi-liquid-crystal
 
-// https://www.youtube.com/watch?v=WHQOA0hEdoQ
+https://www.youtube.com/watch?v=WHQOA0hEdoQ
