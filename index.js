@@ -35,7 +35,9 @@ LogRunning()
 boot()
 start()
 
-setTimeout(update, tickrate)
+for (let i = 0; i < ROWS; i++) {
+    update(i, 0)
+}
 
 function boot() {
     lcd.beginSync()
@@ -51,44 +53,43 @@ function boot() {
 
 function start() {
     lcd.clearSync()
-    lcd.setCursorSync(1, 0)
-    lcd.printSync(twinkle)
-    lcd.setCursorSync(4, 1)
-    lcd.printSync('8Pirats')
-
     LogCustom('  USER  ', colors.cyan, `${colors.magenta}Twinkle!`)
 
     config[0].msg = twinkle
-    config[1].msg = '      8Pirats      '
+    config[1].msg = '    8Pirats    '
+    config[1].scroll = false
     LogCustom('  DEBUG ', colors.cyan, 'Config:', config)
 }
 
-function update() {
-    setTimeout(update, tickrate);
-
-    for (var j = 0; j < ROWS; j++) {
-        fitText(config[j].msg, j, config[j].scrollSpeed)
-    }
+function update(line, tick) {
+    cfg = config[line];
 
     // This makes sure the ticks don't overflow by looping back to tick 0 after 2^30 ticks
-    tick = (tick + 1) % (1 << 30)
+    let nextTick = (tick + 1) % (1 << 30)
+
+    setTimeout(() => { update(line, nextTick) }, cfg.scrollSpeed)
+    displayText(cfg.msg, line, tick)
+    // LogCustom('  DEBUG ', colors.cyan, 'Config:', config)
 }
 
-function fitText(msg, line, delay) {
-    if (msg > COLS) {
+function displayText(msg, line, tick) {
+    if (msg.length > COLS) {
         config[line].scroll = true
     }
-
-    i = tick % msg.length
-
     let sliced = ''
-    for (var j = 0; j < COLS; j++) {
-        sliced += msg[(i + j) % msg.length]
+
+    if (config[line].scroll) {
+        i = tick % msg.length
+
+        for (var j = 0; j < COLS; j++) {
+            sliced += msg[(i + j) % msg.length]
+        }
+    } else {
+        sliced = msg
     }
 
     lcd.setCursorSync(0, line)
     lcd.printSync(sliced)
-    sleep(delay)
 
     // LogCustom(' UPDATE ', 'debug', `Sliced[${sliced}] i[${i}] i+j[${i+j}]`)
 }
