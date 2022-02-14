@@ -1,4 +1,5 @@
 const { LogRunning, LogCheck, LogCustom, colors } = require('./logging')
+const { Sleep } = require('./utility')
 
 const LCD = require('raspberrypi-liquid-crystal')
 
@@ -20,24 +21,17 @@ config = [
 function configInit() {
     return {
         'msg': '8',
-        'align': 'center',
         'scroll': false,
         'scrollSpeed': 50,
+        'scrollRight': true,
+        'align': 'center',
     }
 }
 
 twinkle = "Twinkle Twinkle Little star how I wonder what you are, up above the world so high, like a diamond in the sky."
 
-let tick = 0
-let tickrate = 0
-
 LogRunning()
 boot()
-start()
-
-for (let i = 0; i < ROWS; i++) {
-    update(i, 0)
-}
 
 function boot() {
     lcd.beginSync()
@@ -49,15 +43,26 @@ function boot() {
     lcd.printSync('8Pirats')
     LogCheck('Booting Up!')
     sleep(2000)
+    lcd.clearSync()
+
+    start()
+
+    for (let i = 0; i < ROWS; i++) {
+        update(i, 0)
+    }
 }
 
 function start() {
-    lcd.clearSync()
     LogCustom('  USER  ', colors.cyan, `${colors.magenta}Twinkle!`)
 
     config[0].msg = twinkle
+    config[0].scrollSpeed = 100
+
     config[1].msg = '    8Pirats    '
-    config[1].scroll = false
+    config[1].scroll = true
+    config[1].scrollRight = false
+    config[1].scrollSpeed = 500
+
     LogCustom('  DEBUG ', colors.cyan, 'Config:', config)
 }
 
@@ -69,20 +74,29 @@ function update(line, tick) {
 
     setTimeout(() => { update(line, nextTick) }, cfg.scrollSpeed)
     displayText(cfg.msg, line, tick)
-    // LogCustom('  DEBUG ', colors.cyan, 'Config:', config)
 }
 
 function displayText(msg, line, tick) {
-    if (msg.length > COLS) {
-        config[line].scroll = true
+    cfg = config[line];
+
+    if ((msg.length > COLS) && (!cfg.scroll)) {
+        cfg.scroll = true
+        LogCustom('  DEBUG ', colors.cyan, 'Config:', config)
     }
+
     let sliced = ''
 
-    if (config[line].scroll) {
+    if (cfg.scroll) {
         i = tick % msg.length
 
-        for (var j = 0; j < COLS; j++) {
-            sliced += msg[(i + j) % msg.length]
+        if (cfg.scrollRight) {
+            for (var j = 0; j < COLS; j++) {
+                sliced += msg[(i + j) % msg.length]
+            }
+        } else {
+            for (var j = (COLS - 1); j >= 0; j--) {
+                sliced += msg[(i + j) % msg.length]
+            }
         }
     } else {
         sliced = msg
@@ -92,12 +106,4 @@ function displayText(msg, line, tick) {
     lcd.printSync(sliced)
 
     // LogCustom(' UPDATE ', 'debug', `Sliced[${sliced}] i[${i}] i+j[${i+j}]`)
-}
-
-function sleep(milliseconds) {
-    const date = Date.now()
-    let currentDate = null
-    do {
-        currentDate = Date.now()
-    } while (currentDate - date < milliseconds)
 }
