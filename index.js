@@ -1,11 +1,10 @@
 const { LogRunning, LogCheck, LogCustom, colors } = require('./logging')
 const { Sleep, ReverseString } = require('./utility')
 
-const LCD = require('raspberrypi-liquid-crystal')
 
+const LCD = require('raspberrypi-liquid-crystal')
 const COLS = 16
 const ROWS = 2
-
 const lcd = new LCD(
     1, // I2C bus
     0x27, // Address (sudo i2cdetect -y 1)
@@ -13,11 +12,7 @@ const lcd = new LCD(
     ROWS
 )
 
-config = [
-    configInit(),
-    configInit(),
-]
-
+config = []
 function configInit() {
     return {
         'msg': '8',
@@ -44,6 +39,10 @@ function boot() {
     LogCheck('Booting Up!')
     Sleep(2000)
     lcd.clearSync()
+
+    for (let i = 0; i < ROWS; i++) {
+        config.push(configInit());
+    }
 
     start()
 
