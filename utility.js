@@ -10,6 +10,18 @@ function Sleep(milliseconds) {
     } while (currentDate - date < milliseconds)
 }
 
+/**
+ * Returns the reverse of given string
+ * @param str String to be reversed
+ */
+function ReverseString(str) {
+    var splitString = str.split("");
+    var reverseArray = splitString.reverse();
+    var joinArray = reverseArray.join("");
+    return joinArray;
+}
+
 module.exports = {
-    Sleep
+    Sleep,
+    ReverseString,
 }

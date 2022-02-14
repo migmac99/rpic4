@@ -1,5 +1,5 @@
 const { LogRunning, LogCheck, LogCustom, colors } = require('./logging')
-const { Sleep } = require('./utility')
+const { Sleep, ReverseString } = require('./utility')
 
 const LCD = require('raspberrypi-liquid-crystal')
 
@@ -42,7 +42,7 @@ function boot() {
     lcd.setCursorSync(4, 1)
     lcd.printSync('8Pirats')
     LogCheck('Booting Up!')
-    sleep(2000)
+    Sleep(2000)
     lcd.clearSync()
 
     start()
@@ -95,7 +95,7 @@ function displayText(msg, line, tick) {
             }
         } else {
             for (var j = (COLS - 1); j >= 0; j--) {
-                sliced += msg[(i + j) % msg.length]
+                sliced += ReverseString(msg)[(i + j) % msg.length]
             }
         }
     } else {
