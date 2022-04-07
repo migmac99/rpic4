@@ -18,6 +18,36 @@ This creates a node.js server
 - Install nodemon ```npm install nodemon --global```
 - Then start server with ```nodemon index.js```
 
+# Auto Restart
+ ```sudo nano /etc/systemd/system/startscript.service```
+
+- Paste the following
+    ```
+    #!/bin/sh
+
+    cd home/pi/rpic4
+    nodemon index.js
+    ```
+```sudo chmod +x /home/pi/StartupScript.sh```
+
+```sudo nano /etc/systemd/system/startscript.service```
+- Paste the following
+    ```
+    [Unit]
+    Description=Script that runs on start
+
+    [Service]
+    ExecStart=/home/pi/StartupScript.sh
+
+    [Install]
+    WantedBy=multi-user.target
+    ```
+
+```sudo systemctl enable startscript.service```
+
+```sudo systemctl start startscript.service```
+
+```sudo systemctl status startscript.service```
 
 # Read more about the dependencies used here
 https://www.npmjs.com/package/raspberrypi-liquid-crystal
