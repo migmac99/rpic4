@@ -49,6 +49,22 @@ This creates a node.js server
 
 ```sudo systemctl status startscript.service```
 
+
+# Auto Update
+
+```sudo sh automate.sh```
+```sudo chmod u+x *.sh```
+
+To Open crontab do: ```crontab -e```
+
+Then Paste this line:
+```* * * * * /rpic4/automate.sh > /dev/null 2>&1```
+
+To restart crontab and apply changes do:
+```sudo service crond restart```
+
+To view if crontab is functionaling properly do: ```clear && grep CRON /var/log/syslog```
+
 # Read more about the dependencies used here
 https://www.npmjs.com/package/raspberrypi-liquid-crystal
 
