@@ -1,3 +1,4 @@
+cd ..
 
 git checkout -b master
 git remote update
@@ -11,5 +12,5 @@ if [ $LOCAL = $REMOTE ]; then
     echo "Up-to-date"
 elif [ $LOCAL = $BASE ]; then
     echo "Need to pull"
-    sh pull_code.sh     
+    sh automation/pull_code.sh     
 fi
