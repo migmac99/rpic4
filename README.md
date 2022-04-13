@@ -58,7 +58,7 @@ This creates a node.js server
 To Open crontab do: ```crontab -e```
 
 Then Paste this line:
-```* * * * * /rpic4/automate.sh >/dev/null 2>&1```
+```* * * * * /rpic4/automation/automate.sh >/dev/null 2>&1```
 
 To restart crontab and apply changes do:
 ```sudo service crond restart```
