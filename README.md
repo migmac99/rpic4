@@ -65,6 +65,23 @@ To restart crontab and apply changes do:
 
 To view if crontab is functionaling properly do: ```clear && grep CRON /var/log/syslog```
 
+# CronTab
+
+At the end your crontab should look like this 
+
+```
+* * * * * cd rpic4/automation && sudo chmod u+x *.sh && cd .. && ./automation/automate.sh >/dev/null 2>&1
+
+# Comment the lines below if you want it to look for updates every minute instead of every 10 seconds
+* * * * * sleep 10 && cd rpic4/automation && sudo chmod u+x *.sh && cd .. && ./automation/automate.sh >/dev/null 2>&1
+* * * * * sleep 20 && cd rpic4/automation && sudo chmod u+x *.sh && cd .. && ./automation/automate.sh >/dev/null 2>&1
+* * * * * sleep 30 && cd rpic4/automation && sudo chmod u+x *.sh && cd .. && ./automation/automate.sh >/dev/null 2>&1
+* * * * * sleep 40 && cd rpic4/automation && sudo chmod u+x *.sh && cd .. && ./automation/automate.sh >/dev/null 2>&1
+* * * * * sleep 50 && cd rpic4/automation && sudo chmod u+x *.sh && cd .. && ./automation/automate.sh >/dev/null 2>&1
+
+@reboot sh StartupScript.sh
+```
+
 # Read more about the dependencies used here
 https://www.npmjs.com/package/raspberrypi-liquid-crystal
 
