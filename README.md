@@ -1,5 +1,3 @@
-Attempt: 3
-
 # Raspberry PI C4
 A C4 that runs on a Raspberry Pi (for playing airsoft)
 
@@ -60,7 +58,7 @@ This creates a node.js server
 To Open crontab do: ```crontab -e```
 
 Then Paste this line:
-```* * * * * /rpic4/automation/automate.sh >/dev/null 2>&1```
+```* * * * * cd rpic4/automation && sudo chmod u+x *.sh && cd .. && ./automation/automate.sh >/dev/null 2>&1```
 
 To restart crontab and apply changes do:
 ```sudo service crond restart```
