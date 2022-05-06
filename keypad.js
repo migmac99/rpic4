@@ -12,7 +12,7 @@ var input = new Keypad(
 );
 
 setInterval(() => {
-    var key = keypad.getKey();
+    var key = input.getKey();
     if (key != null) {
         console.log("key pressed: " + key);
     } else {
