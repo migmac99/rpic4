@@ -97,7 +97,7 @@ C4 = 19
 
 const GPIO = require('rpi-gpio')
 
-GPIO.setwarnings(False)
+GPIO.setwarnings(false)
 GPIO.setmode(GPIO.BOARD)
 
 GPIO.setup(L1, GPIO.OUT)
