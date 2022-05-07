@@ -87,18 +87,23 @@ const keys = [
 
 var gpio = require('rpi-gpio')
 
-gpio.on('change', function(channel, value) {
-    console.log('Channel ' + channel + ' value is now ' + value)
-})
-gpio.setup(16, gpio.DIR_IN, gpio.EDGE_BOTH)
-gpio.setup(13, gpio.DIR_IN, gpio.EDGE_BOTH)
-gpio.setup(16, gpio.DIR_IN, gpio.EDGE_BOTH)
-gpio.setup(12, gpio.DIR_IN, gpio.EDGE_BOTH)
+function readInput(err) {
+    if (err) throw err
+    gpio.read(7, function(err, value) {
+        if (err) throw err
+        console.log('The value is ' + value)
+    })
+}
 
-gpio.setup(21, gpio.DIR_IN, gpio.EDGE_BOTH)
-gpio.setup(26, gpio.DIR_IN, gpio.EDGE_BOTH)
-gpio.setup(20, gpio.DIR_IN, gpio.EDGE_BOTH)
-gpio.setup(19, gpio.DIR_IN, gpio.EDGE_BOTH)
+gpio.setup(16, gpio.DIR_IN, readInput)
+gpio.setup(13, gpio.DIR_IN, readInput)
+gpio.setup(16, gpio.DIR_IN, readInput)
+gpio.setup(12, gpio.DIR_IN, readInput)
+
+gpio.setup(21, gpio.DIR_IN, readInput)
+gpio.setup(26, gpio.DIR_IN, readInput)
+gpio.setup(20, gpio.DIR_IN, readInput)
+gpio.setup(19, gpio.DIR_IN, readInput)
 
 
 ////////////////////////////////////////////////////////////////////////
