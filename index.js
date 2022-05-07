@@ -85,20 +85,74 @@ const keys = [
     ["*", "0", "#", "D"],
 ]
 
-const Gpio = require('onoff').Gpio;
+L1 = 16
+L2 = 13
+L3 = 6
+L4 = 12
 
-const buttons = [
-    new Gpio(16, 'in', 'both'),
-    new Gpio(13, 'in', 'both'),
-    new Gpio(6, 'in', 'both'),
-    new Gpio(12, 'in', 'both'),
-    new Gpio(21, 'in', 'both'),
-    new Gpio(26, 'in', 'both'),
-    new Gpio(20, 'in', 'both'),
-    new Gpio(19, 'in', 'both'),
-]
+C1 = 21
+C2 = 26
+C3 = 20
+C4 = 19
 
+GPIO.setwarnings(False)
+GPIO.setmode(GPIO.BOARD)
 
+GPIO.setup(L1, GPIO.OUT)
+GPIO.setup(L2, GPIO.OUT)
+GPIO.setup(L3, GPIO.OUT)
+GPIO.setup(L4, GPIO.OUT)
+
+GPIO.setup(C1, GPIO.IN, pull_up_down = GPIO.PUD_DOWN)
+GPIO.setup(C2, GPIO.IN, pull_up_down = GPIO.PUD_DOWN)
+GPIO.setup(C3, GPIO.IN, pull_up_down = GPIO.PUD_DOWN)
+GPIO.setup(C4, GPIO.IN, pull_up_down = GPIO.PUD_DOWN)
+
+function readLine(line, characters) {
+    GPIO.output(line, GPIO.HIGH)
+    if (GPIO.input(C1) == 1) {
+        LogCustom(`  GPIO  `, colors.cyan, `[${characters[0]}]`)
+    }
+    if (GPIO.input(C2) == 1) {
+        LogCustom(`  GPIO  `, colors.cyan, `[${characters[1]}]`)
+    }
+    if (GPIO.input(C3) == 1) {
+        LogCustom(`  GPIO  `, colors.cyan, `[${characters[2]}]`)
+    }
+    if (GPIO.input(C4) == 1) {
+        LogCustom(`  GPIO  `, colors.cyan, `[${characters[3]}]`)
+    }
+    GPIO.output(line, GPIO.LOW)
+}
+
+while (true) {
+    readLine(L1, ["1", "2", "3", "A"])
+    readLine(L2, ["4", "5", "6", "B"])
+    readLine(L3, ["7", "8", "9", "C"])
+    readLine(L4, ["*", "0", "#", "D"])
+    time.sleep(0.1)
+}
+
+// const Gpio = require('onoff').Gpio;
+
+// const buttons = [
+//     new Gpio(16, 'in', 'both'),
+//     new Gpio(13, 'in', 'both'),
+//     new Gpio(6, 'in', 'both'),
+//     new Gpio(12, 'in', 'both'),
+//     new Gpio(21, 'in', 'both'),
+//     new Gpio(26, 'in', 'both'),
+//     new Gpio(20, 'in', 'both'),
+//     new Gpio(19, 'in', 'both'),
+// ]
+
+// for (let i = 0; i < buttons.length; i++) {
+//     buttons[i].watch((err, value) => {
+//         if (value != 0) {
+//             LogCustom(`  GPIO  `, colors.cyan, `[${returnPin(i)}] Value => [${value}]`)
+//         }
+//     })
+// }
 
 function returnPin(idx) {
     let a = [16, 13, 6, 12, 21, 26, 20, 19]
@@ -122,14 +176,6 @@ function update(line, tick) {
 
 
     // config[0].msg = "Key pressed: " + key
-
-    for (let i = 0; i < buttons.length; i++) {
-        buttons[i].watch((err, value) => {
-            if (value != 0) {
-                LogCustom(`  GPIO  `, colors.cyan, `[${returnPin(i)}] Value => [${value}]`)
-            }
-        })
-    }
 }
 
 function displayText(msg, line, tick) {
