@@ -101,7 +101,7 @@ const buttons = [
 for (let i = 0; i < buttons.length; i++) {
     buttons[i].watch((err, value) => {
         if (value != 0) {
-            LogCustom(`GPIO[${returnPin(i)}]`, colors.cyan, `Value => [${value}]`)
+            LogCustom(`  GPIO  `, colors.cyan, `[${returnPin(i)}] Value => [${value}]`)
         }
     })
 }
