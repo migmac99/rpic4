@@ -68,25 +68,50 @@ function start() {
 
 ////////////////////////////////////////////////////////////////////////
 
-var Keypad = require("rpi-keypad")
+// const physPinCodes = {
+//     rows: ["P1-36", "P1-33", "P1-31", "P1-32"],
+//     cols: ["P1-40", "P1-37", "P1-38", "P1-35"],
+// }
 
-var input = new Keypad(
-    [
+// const pinCodes = {
+//     rows: [16, 13, 6, 12],
+//     cols: [21, 26, 20, 19],
+// }
+
+// const keys = [
+//     ["1", "2", "3", "A"],
+//     ["4", "5", "6", "B"],
+//     ["7", "8", "9", "C"],
+//     ["*", "0", "#", "D"],
+// ]
+
+const Keypad = require('gpio-matrix-keypad');
+let pin = [];
+
+function newKey(key) {
+    pin.push(key);
+    if (pin.length === 4) submit();
+}
+
+function submit() {
+    console.log(pin.join(''));
+    pin = [];
+}
+
+const options = {
+    keys: [
         ["1", "2", "3", "A"],
         ["4", "5", "6", "B"],
         ["7", "8", "9", "C"],
         ["*", "0", "#", "D"],
     ], // keypad layout
-    [40, 38, 36, 32], // row GPIO pins
-    [37, 35, 33, 31], // colum GPIO pins
-    // additional:
-    true, // use key press events
-    100 // interval in ms to poll for key events
-)
+    rows: [16, 13, 6, 12], // row GPIO pins. Use ones that pull down or are configured to pull down
+    cols: [21, 26, 20, 19], // colum GPIO pins,
+    onKey: newKey
+        //defaultState: 1 // 1 for pulldown row gpio, 0 for pullup rows. The default is 1. Mixing of pullup/pulldown for the row connections is not supported.
+};
 
-input.on("keypress", (key) => {
-    console.log("key pressed: " + key);
-})
+Keypad.listen(options)
 
 ////////////////////////////////////////////////////////////////////////
 
@@ -100,16 +125,8 @@ function update(line, tick) {
     setTimeout(() => { update(line, nextTick) }, cfg.scrollSpeed)
     displayText(cfg.msg, line, tick)
 
-    // setInterval(() => {
-    //     var key = input.getKey()
-    //     config[0].scroll = false
 
-    //     if (key != null) {
-    //         config[0].msg = "Key pressed: " + key
-    //     } else {
-    //         config[0].msg = "No Key Pressed!"
-    //     }
-    // }, 100)
+    // config[0].msg = "Key pressed: " + key
 }
 
 function displayText(msg, line, tick) {
