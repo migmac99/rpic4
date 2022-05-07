@@ -25,7 +25,7 @@ const lcd = new LCD({
 });
 
 const pinCodes = {
-    rows: ["GPIO5", "GPIO6", "GPIO13", "GPIO19"],
+    rows: ["GPI01", "GPIO7", "GPIO08", "GPIO25"],
     cols: ["GPIO12", "GPIO16", "GPIO20", "GPIO21"]
 };
 
