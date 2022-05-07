@@ -100,8 +100,15 @@ const buttons = [
 
 for (let i = 0; i < buttons.length; i++) {
     buttons[i].watch((err, value) => {
-        LogCustom('  DEBUG ', colors.cyan, `Button Value => [${value}]`)
+        if (value != 0) {
+            LogCustom('  DEBUG ', colors.cyan, `GPIO [${returnPin(i)}] Value => [${value}]`)
+        }
     })
+}
+
+function returnPin(idx) {
+    let a = [16, 13, 6, 12, 21, 26, 20, 19]
+    return a[idx]
 }
 
 // button.watch((err, value) => led.writeSync(value));
