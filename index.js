@@ -75,16 +75,16 @@ function update(line, tick) {
     setTimeout(() => { update(line, nextTick) }, cfg.scrollSpeed)
     displayText(cfg.msg, line, tick)
 
-    setInterval(() => {
-        var key = input.getKey()
-        config[0].scroll = false
+    // setInterval(() => {
+    //     var key = input.getKey()
+    //     config[0].scroll = false
 
-        if (key != null) {
-            config[0].msg = "Key pressed: " + key
-        } else {
-            config[0].msg = "No Key Pressed!"
-        }
-    }, 100)
+    //     if (key != null) {
+    //         config[0].msg = "Key pressed: " + key
+    //     } else {
+    //         config[0].msg = "No Key Pressed!"
+    //     }
+    // }, 100)
 }
 
 var Keypad = require("rpi-keypad")
