@@ -13,6 +13,7 @@ const lcd = new LCD(
 )
 
 config = []
+
 function configInit() {
     return {
         'msg': '8',
@@ -57,7 +58,7 @@ function start() {
     config[0].msg = twinkle
     config[0].scrollSpeed = 100
 
-    config[1].msg = '    8Pirats    '
+    config[1].msg = '    3Pirats    '
     config[1].scroll = true
     config[1].scrollRight = false
     config[1].scrollSpeed = 500
