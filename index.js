@@ -98,17 +98,17 @@ let C4 = 19
 const GPIO = require('rpi-gpio')
 
 
-var gpiop = require('rpi-gpio').promise;
+// var gpiop = require('rpi-gpio').promise;
 
-gpiop.setup(L1, gpiop.DIR_OUT).then(() => { return gpiop.write(L1, true) }).catch((err) => { console.log('Error: ', err.toString()) })
-gpiop.setup(L2, gpiop.DIR_OUT).then(() => { return gpiop.write(L2, true) }).catch((err) => { console.log('Error: ', err.toString()) })
-gpiop.setup(L3, gpiop.DIR_OUT).then(() => { return gpiop.write(L3, true) }).catch((err) => { console.log('Error: ', err.toString()) })
-gpiop.setup(L4, gpiop.DIR_OUT).then(() => { return gpiop.write(L4, true) }).catch((err) => { console.log('Error: ', err.toString()) })
+// gpiop.setup(L1, gpiop.DIR_OUT).then(() => { return gpiop.write(L1, true) }).catch((err) => { console.log('Error: ', err.toString()) })
+// gpiop.setup(L2, gpiop.DIR_OUT).then(() => { return gpiop.write(L2, true) }).catch((err) => { console.log('Error: ', err.toString()) })
+// gpiop.setup(L3, gpiop.DIR_OUT).then(() => { return gpiop.write(L3, true) }).catch((err) => { console.log('Error: ', err.toString()) })
+// gpiop.setup(L4, gpiop.DIR_OUT).then(() => { return gpiop.write(L4, true) }).catch((err) => { console.log('Error: ', err.toString()) })
 
-gpiop.setup(C1, gpiop.DIR_IN).then(() => { return gpiop.read(C1, true) }).catch((err) => { console.log('Error: ', err.toString()) })
-gpiop.setup(C2, gpiop.DIR_IN).then(() => { return gpiop.read(C2, true) }).catch((err) => { console.log('Error: ', err.toString()) })
-gpiop.setup(C3, gpiop.DIR_IN).then(() => { return gpiop.read(C3, true) }).catch((err) => { console.log('Error: ', err.toString()) })
-gpiop.setup(C4, gpiop.DIR_IN).then(() => { return gpiop.read(C4, true) }).catch((err) => { console.log('Error: ', err.toString()) })
+// gpiop.setup(C1, gpiop.DIR_IN).then(() => { return gpiop.read(C1, true) }).catch((err) => { console.log('Error: ', err.toString()) })
+// gpiop.setup(C2, gpiop.DIR_IN).then(() => { return gpiop.read(C2, true) }).catch((err) => { console.log('Error: ', err.toString()) })
+// gpiop.setup(C3, gpiop.DIR_IN).then(() => { return gpiop.read(C3, true) }).catch((err) => { console.log('Error: ', err.toString()) })
+// gpiop.setup(C4, gpiop.DIR_IN).then(() => { return gpiop.read(C4, true) }).catch((err) => { console.log('Error: ', err.toString()) })
 
 // GPIO.setwarnings(false)
 // GPIO.setmode(GPIO.BOARD)
@@ -123,22 +123,22 @@ gpiop.setup(C4, gpiop.DIR_IN).then(() => { return gpiop.read(C4, true) }).catch(
 // GPIO.setup(C3, GPIO.IN, pull_up_down = GPIO.PUD_DOWN)
 // GPIO.setup(C4, GPIO.IN, pull_up_down = GPIO.PUD_DOWN)
 
-function readLine(line, characters) {
-    GPIO.output(line, GPIO.HIGH)
-    if (GPIO.input(C1) == 1) { LogCustom(`  GPIO  `, colors.cyan, `[${characters[0]}]`) }
-    if (GPIO.input(C2) == 1) { LogCustom(`  GPIO  `, colors.cyan, `[${characters[1]}]`) }
-    if (GPIO.input(C3) == 1) { LogCustom(`  GPIO  `, colors.cyan, `[${characters[2]}]`) }
-    if (GPIO.input(C4) == 1) { LogCustom(`  GPIO  `, colors.cyan, `[${characters[3]}]`) }
-    GPIO.output(line, GPIO.LOW)
-}
+// function readLine(line, characters) {
+//     GPIO.output(line, GPIO.HIGH)
+//     if (GPIO.input(C1) == 1) { LogCustom(`  GPIO  `, colors.cyan, `[${characters[0]}]`) }
+//     if (GPIO.input(C2) == 1) { LogCustom(`  GPIO  `, colors.cyan, `[${characters[1]}]`) }
+//     if (GPIO.input(C3) == 1) { LogCustom(`  GPIO  `, colors.cyan, `[${characters[2]}]`) }
+//     if (GPIO.input(C4) == 1) { LogCustom(`  GPIO  `, colors.cyan, `[${characters[3]}]`) }
+//     GPIO.output(line, GPIO.LOW)
+// }
 
-while (true) {
-    readLine(L1, ["1", "2", "3", "A"])
-    readLine(L2, ["4", "5", "6", "B"])
-    readLine(L3, ["7", "8", "9", "C"])
-    readLine(L4, ["*", "0", "#", "D"])
-    time.sleep(0.1)
-}
+// while (true) {
+//     readLine(L1, ["1", "2", "3", "A"])
+//     readLine(L2, ["4", "5", "6", "B"])
+//     readLine(L3, ["7", "8", "9", "C"])
+//     readLine(L4, ["*", "0", "#", "D"])
+//     time.sleep(0.1)
+// }
 
 // const Gpio = require('onoff').Gpio;
 
@@ -161,10 +161,10 @@ while (true) {
 //     })
 // }
 
-function returnPin(idx) {
-    let a = [16, 13, 6, 12, 21, 26, 20, 19]
-    return a[idx]
-}
+// function returnPin(idx) {
+//     let a = [16, 13, 6, 12, 21, 26, 20, 19]
+//     return a[idx]
+// }
 
 // button.watch((err, value) => led.writeSync(value));
 
