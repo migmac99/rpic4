@@ -25,8 +25,8 @@ const lcd = new LCD({
 });
 
 const pinCodes = {
-    rows: ["P1-31", "P1-33", "P1-35", "P1-37"],
-    cols: ["P1-32", "P1-36", "P1-38", "P1-40"]
+    rows: ["P1-40", "P1-37", "P1-38", "P1-35"],
+    cols: ["P1-36", "P1-33", "P1-31", "P1-32"]
 };
 
 const keys = [
