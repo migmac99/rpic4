@@ -1,6 +1,14 @@
 const { LogRunning, LogCheck, LogCustom, colors } = require('./logging')
 const { Sleep, ReverseString } = require('./utility')
 
+const { Board, LCD, Pin, Buttons } = require("johnny-five");
+const { RaspiIO } = require("raspi-io");
+const { execSync } = require("child_process");
+
+const board = new Board({
+    io: new RaspiIO(),
+    repl: false
+});
 
 const LCD = require('raspberrypi-liquid-crystal')
 const COLS = 16
@@ -69,25 +77,124 @@ function start() {
 
 ////////////////////////////////////////////////////////////////////////
 
-var Keypad = require("rpi-keypad")
+const pinCodes = {
+    rows: ["GPIO5", "GPIO6", "GPIO13", "GPIO19"],
+    cols: ["GPIO12", "GPIO16", "GPIO20", "GPIO21"]
+};
 
-var input = new Keypad(
-    [
-        ["1", "2", "3", "A"],
-        ["4", "5", "6", "B"],
-        ["7", "8", "9", "C"],
-        ["*", "0", "#", "D"],
-    ], // keypad layout
-    [40, 38, 36, 32], // row GPIO pins
-    [37, 35, 33, 31], // colum GPIO pins
-    // additional:
-    true, // use key press events
-    100 // interval in ms to poll for key events
-)
+const keys = [
+    ["1", "2", "3", "A"],
+    ["4", "5", "6", "B"],
+    ["7", "8", "9", "C"],
+    ["*", "0", "#", "D"],
+];
 
-input.on("keypress", (key) => {
-    config[0].msg = "Key pressed: " + key
-})
+var colPressed = null;
+var rowPressed = null;
+
+var keypad = { pins: null };
+
+async function checkCol() {
+    delete keypad.pins;
+
+    keypad = {
+        pins: Object.assign({}, pinCodes)
+    };
+
+    keypad.pins.rows = keypad.pins.rows.map(function(pinCode) {
+        return new Pin({ mode: Pin.OUTPUT, pin: pinCode });
+    });
+
+    keypad.pins.cols = new Buttons(keypad.pins.cols.map(function(pinCode) {
+        return { pin: pinCode, isPullup: true };
+    }))
+
+    keypad.pins.rows.forEach((pin) => { pin.low() });
+
+    // required wait (for pin creation & pin.low() propagation?)
+    await Sleep(50);
+
+    keypad.pins.cols.on("down", function(button) {
+        // send column index as parameter to checkRow()
+        checkRow(pinCodes.cols.indexOf(button.pin))
+    });
+}
+
+async function checkRow(numCol) {
+    colPressed = numCol;
+
+    // as soon as a button press on a column is detected,
+    // inverse pins modes (input <=> output) to detect pressed button row
+    keypad.pins.cols.forEach((pin) => { pin.removeAllListeners() });
+    delete keypad.pins;
+
+    keypad = {
+        pins: Object.assign({}, pinCodes)
+    };
+
+    keypad.pins.rows = keypad.pins.rows.map(function(pinCode) {
+        return new Pin({ mode: Pin.INPUT, pin: pinCode, type: "digital" });
+    });
+
+    // enable pullup resistors for input pins
+    // I did not find a way to do it through Johnny Five ;
+    // here we must use Pins instead of Buttons because an immediate read
+    // (using Pin.query()) is required
+    pinCodes.rows.forEach(function(code) {
+        execSync('raspi-gpio set ' + parseInt(code.substring(4), 10) + ' pu');
+    });
+
+    keypad.pins.cols = keypad.pins.cols.map(function(pinCode) {
+        return new Pin({ mode: Pin.OUTPUT, pin: pinCode, type: "digital" });
+    });
+
+    keypad.pins.cols.forEach((pin) => { pin.low() });
+
+    // required wait (for pin creation & pin.low() propagation?)
+    await Sleep(50);
+
+    rowPressed = null;
+
+    for (let currentRow = 0; currentRow < 4; currentRow++) {
+        if (await isButtonPressedInKeypadRow(keypad, currentRow)) {
+            rowPressed = currentRow;
+            break;
+        }
+    }
+
+    if (rowPressed !== null) {
+        showKeyPressed();
+    } else {
+        config[0].msg = "[1] Keypad Issue!"
+        console.log("Keypad issue: could not detect row of pressed key. Waiting for next key push.");
+    }
+
+    checkCol();
+}
+
+/**
+ * Detect if a button has been pressed in specified keypad col
+ * @return Promise
+ */
+function isButtonPressedInKeypadRow(keypad, rowNum) {
+    return new Promise((resolve) => {
+        keypad.pins.rows[rowNum].query((state) => {
+            resolve(state.value == 0);
+        });
+    });
+}
+
+function showKeyPressed() {
+    let char = keys[rowPressed][colPressed];
+    config[0].msg = "Key pressed: " + char
+    console.log("KEY PRESSED: ", char);
+    if (cursorPos == 16) {
+        cursorPos = 0;
+        config[0].msg = ""
+    }
+    config[0].msg = char
+    cursorPos++;
+}
 
 ////////////////////////////////////////////////////////////////////////
 

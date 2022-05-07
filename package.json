@@ -12,6 +12,8 @@
     "i2c-bus": "^5.2.2",
     "raspberrypi-liquid-crystal": "^1.18.0",
     "rpi-gpio": "^2.1.7",
-    "rpi-keypad": "^1.0.3"
+    "rpi-keypad": "^1.0.3",
+    "johnny-five": "^1.4.0",
+    "raspi-io": "^11.0.0"
   }
 }
