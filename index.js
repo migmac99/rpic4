@@ -97,33 +97,38 @@ C4 = 19
 
 const GPIO = require('rpi-gpio')
 
+
+var gpiop = require('rpi-gpio').promise;
+
+gpiop.setup(L1, gpiop.DIR_OUT).then(() => { return gpiop.write(L1, true) }).catch((err) => { console.log('Error: ', err.toString()) })
+gpiop.setup(L2, gpiop.DIR_OUT).then(() => { return gpiop.write(L2, true) }).catch((err) => { console.log('Error: ', err.toString()) })
+gpiop.setup(L3, gpiop.DIR_OUT).then(() => { return gpiop.write(L3, true) }).catch((err) => { console.log('Error: ', err.toString()) })
+gpiop.setup(L4, gpiop.DIR_OUT).then(() => { return gpiop.write(L4, true) }).catch((err) => { console.log('Error: ', err.toString()) })
+
+gpiop.setup(C1, gpiop.DIR_IN).then(() => { return gpiop.read(C1, true) }).catch((err) => { console.log('Error: ', err.toString()) })
+gpiop.setup(C2, gpiop.DIR_IN).then(() => { return gpiop.read(C2, true) }).catch((err) => { console.log('Error: ', err.toString()) })
+gpiop.setup(C3, gpiop.DIR_IN).then(() => { return gpiop.read(C3, true) }).catch((err) => { console.log('Error: ', err.toString()) })
+gpiop.setup(C4, gpiop.DIR_IN).then(() => { return gpiop.read(C4, true) }).catch((err) => { console.log('Error: ', err.toString()) })
+
 // GPIO.setwarnings(false)
-GPIO.setmode(GPIO.BOARD)
+// GPIO.setmode(GPIO.BOARD)
 
-GPIO.setup(L1, GPIO.OUT)
-GPIO.setup(L2, GPIO.OUT)
-GPIO.setup(L3, GPIO.OUT)
-GPIO.setup(L4, GPIO.OUT)
+// GPIO.setup(L1, GPIO.OUT)
+// GPIO.setup(L2, GPIO.OUT)
+// GPIO.setup(L3, GPIO.OUT)
+// GPIO.setup(L4, GPIO.OUT)
 
-GPIO.setup(C1, GPIO.IN, pull_up_down = GPIO.PUD_DOWN)
-GPIO.setup(C2, GPIO.IN, pull_up_down = GPIO.PUD_DOWN)
-GPIO.setup(C3, GPIO.IN, pull_up_down = GPIO.PUD_DOWN)
-GPIO.setup(C4, GPIO.IN, pull_up_down = GPIO.PUD_DOWN)
+// GPIO.setup(C1, GPIO.IN, pull_up_down = GPIO.PUD_DOWN)
+// GPIO.setup(C2, GPIO.IN, pull_up_down = GPIO.PUD_DOWN)
+// GPIO.setup(C3, GPIO.IN, pull_up_down = GPIO.PUD_DOWN)
+// GPIO.setup(C4, GPIO.IN, pull_up_down = GPIO.PUD_DOWN)
 
 function readLine(line, characters) {
     GPIO.output(line, GPIO.HIGH)
-    if (GPIO.input(C1) == 1) {
-        LogCustom(`  GPIO  `, colors.cyan, `[${characters[0]}]`)
-    }
-    if (GPIO.input(C2) == 1) {
-        LogCustom(`  GPIO  `, colors.cyan, `[${characters[1]}]`)
-    }
-    if (GPIO.input(C3) == 1) {
-        LogCustom(`  GPIO  `, colors.cyan, `[${characters[2]}]`)
-    }
-    if (GPIO.input(C4) == 1) {
-        LogCustom(`  GPIO  `, colors.cyan, `[${characters[3]}]`)
-    }
+    if (GPIO.input(C1) == 1) { LogCustom(`  GPIO  `, colors.cyan, `[${characters[0]}]`) }
+    if (GPIO.input(C2) == 1) { LogCustom(`  GPIO  `, colors.cyan, `[${characters[1]}]`) }
+    if (GPIO.input(C3) == 1) { LogCustom(`  GPIO  `, colors.cyan, `[${characters[2]}]`) }
+    if (GPIO.input(C4) == 1) { LogCustom(`  GPIO  `, colors.cyan, `[${characters[3]}]`) }
     GPIO.output(line, GPIO.LOW)
 }
 
