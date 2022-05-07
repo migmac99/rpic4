@@ -87,23 +87,23 @@ const keys = [
 
 var gpio = require('rpi-gpio')
 
-function readInput(err) {
+function readInput(pin, err) {
     if (err) throw err
-    gpio.read(7, function(err, value) {
+    gpio.read(pin, function(err, value) {
         if (err) throw err
         console.log('The value is ' + value)
     })
 }
 
-gpio.setup(16, gpio.DIR_IN, readInput)
-gpio.setup(13, gpio.DIR_IN, readInput)
-gpio.setup(16, gpio.DIR_IN, readInput)
-gpio.setup(12, gpio.DIR_IN, readInput)
+gpio.setup(16, gpio.DIR_IN, readInput(16))
+gpio.setup(13, gpio.DIR_IN, readInput(13))
+gpio.setup(16, gpio.DIR_IN, readInput(16))
+gpio.setup(12, gpio.DIR_IN, readInput(12))
 
-gpio.setup(21, gpio.DIR_IN, readInput)
-gpio.setup(26, gpio.DIR_IN, readInput)
-gpio.setup(20, gpio.DIR_IN, readInput)
-gpio.setup(19, gpio.DIR_IN, readInput)
+gpio.setup(21, gpio.DIR_IN, readInput(21))
+gpio.setup(26, gpio.DIR_IN, readInput(26))
+gpio.setup(20, gpio.DIR_IN, readInput(20))
+gpio.setup(19, gpio.DIR_IN, readInput(19))
 
 
 ////////////////////////////////////////////////////////////////////////
