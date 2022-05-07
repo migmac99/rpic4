@@ -73,45 +73,24 @@ function start() {
 //     cols: ["P1-40", "P1-37", "P1-38", "P1-35"],
 // }
 
-// const pinCodes = {
-//     rows: [16, 13, 6, 12],
-//     cols: [21, 26, 20, 19],
-// }
-
-// const keys = [
-//     ["1", "2", "3", "A"],
-//     ["4", "5", "6", "B"],
-//     ["7", "8", "9", "C"],
-//     ["*", "0", "#", "D"],
-// ]
-
-const Keypad = require('gpio-matrix-keypad');
-let pin = [];
-
-function newKey(key) {
-    pin.push(key);
-    if (pin.length === 4) submit();
+const pinCodes = {
+    rows: [16, 13, 6, 12],
+    cols: [21, 26, 20, 19],
 }
 
-function submit() {
-    console.log(pin.join(''));
-    pin = [];
-}
+const keys = [
+    ["1", "2", "3", "A"],
+    ["4", "5", "6", "B"],
+    ["7", "8", "9", "C"],
+    ["*", "0", "#", "D"],
+]
 
-const options = {
-    keys: [
-        ["1", "2", "3", "A"],
-        ["4", "5", "6", "B"],
-        ["7", "8", "9", "C"],
-        ["*", "0", "#", "D"],
-    ], // keypad layout
-    rows: [16, 13, 6, 12], // row GPIO pins. Use ones that pull down or are configured to pull down
-    cols: [21, 26, 20, 19], // colum GPIO pins,
-    onKey: newKey
-        //defaultState: 1 // 1 for pulldown row gpio, 0 for pullup rows. The default is 1. Mixing of pullup/pulldown for the row connections is not supported.
-};
+var gpio = require('rpi-gpio')
 
-Keypad.listen(options)
+gpio.on('change', function(channel, value) {
+    console.log('Channel ' + channel + ' value is now ' + value)
+})
+gpio.setup(7, gpio.DIR_IN, gpio.EDGE_BOTH)
 
 ////////////////////////////////////////////////////////////////////////
 
