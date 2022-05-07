@@ -98,13 +98,7 @@ const buttons = [
     new Gpio(19, 'in', 'both'),
 ]
 
-for (let i = 0; i < buttons.length; i++) {
-    buttons[i].watch((err, value) => {
-        if (value != 0) {
-            LogCustom(`  GPIO  `, colors.cyan, `[${returnPin(i)}] Value => [${value}]`)
-        }
-    })
-}
+
 
 function returnPin(idx) {
     let a = [16, 13, 6, 12, 21, 26, 20, 19]
@@ -128,6 +122,14 @@ function update(line, tick) {
 
 
     // config[0].msg = "Key pressed: " + key
+
+    for (let i = 0; i < buttons.length; i++) {
+        buttons[i].watch((err, value) => {
+            if (value != 0) {
+                LogCustom(`  GPIO  `, colors.cyan, `[${returnPin(i)}] Value => [${value}]`)
+            }
+        })
+    }
 }
 
 function displayText(msg, line, tick) {
