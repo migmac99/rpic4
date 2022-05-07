@@ -85,15 +85,15 @@ const keys = [
     ["*", "0", "#", "D"],
 ]
 
-L1 = 16
-L2 = 13
-L3 = 6
-L4 = 12
+let L1 = 16
+let L2 = 13
+let L3 = 6
+let L4 = 12
 
-C1 = 21
-C2 = 26
-C3 = 20
-C4 = 19
+let C1 = 21
+let C2 = 26
+let C3 = 20
+let C4 = 19
 
 const GPIO = require('rpi-gpio')
 
