@@ -90,7 +90,16 @@ var gpio = require('rpi-gpio')
 gpio.on('change', function(channel, value) {
     console.log('Channel ' + channel + ' value is now ' + value)
 })
-gpio.setup(7, gpio.DIR_IN, gpio.EDGE_BOTH)
+gpio.setup(16, gpio.DIR_IN, gpio.EDGE_BOTH)
+gpio.setup(13, gpio.DIR_IN, gpio.EDGE_BOTH)
+gpio.setup(16, gpio.DIR_IN, gpio.EDGE_BOTH)
+gpio.setup(12, gpio.DIR_IN, gpio.EDGE_BOTH)
+
+gpio.setup(21, gpio.DIR_IN, gpio.EDGE_BOTH)
+gpio.setup(26, gpio.DIR_IN, gpio.EDGE_BOTH)
+gpio.setup(20, gpio.DIR_IN, gpio.EDGE_BOTH)
+gpio.setup(19, gpio.DIR_IN, gpio.EDGE_BOTH)
+
 
 ////////////////////////////////////////////////////////////////////////
 
