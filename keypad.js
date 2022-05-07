@@ -69,7 +69,7 @@ board.on("ready", () => {
         keypad.pins.rows.forEach((pin) => { pin.low() });
 
         // required wait (for pin creation & pin.low() propagation?)
-        await Sleep(50);
+        await Sleep(100);
 
         keypad.pins.cols.on("down", function(button) {
             // send column index as parameter to checkRow()
@@ -108,7 +108,7 @@ board.on("ready", () => {
         keypad.pins.cols.forEach((pin) => { pin.low() });
 
         // required wait (for pin creation & pin.low() propagation?)
-        await Sleep(50);
+        await Sleep(100);
 
         rowPressed = null;
 
@@ -142,7 +142,10 @@ board.on("ready", () => {
 
     function showKeyPressed() {
         let char = keys[rowPressed][colPressed];
-        console.log("KEY PRESSED: ", char);
+        console.log(`Row [${rowPressed}]`);
+        console.log(`Col [${colPressed}]`);
+        console.log(``)
+
         if (cursorPos == 16) {
             cursorPos = 0;
             lcd.clear();
