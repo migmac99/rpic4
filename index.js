@@ -58,7 +58,7 @@ function start() {
     config[0].msg = twinkle
     config[0].scrollSpeed = 100
 
-    config[1].msg = '    9Pirats    '
+    config[1].msg = '    8Pirats    '
     config[1].scroll = true
     config[1].scrollRight = false
     config[1].scrollSpeed = 500
@@ -74,7 +74,31 @@ function update(line, tick) {
 
     setTimeout(() => { update(line, nextTick) }, cfg.scrollSpeed)
     displayText(cfg.msg, line, tick)
+
+    setInterval(() => {
+        var key = input.getKey()
+        config[0].scroll = false
+
+        if (key != null) {
+            config[0].msg = "Key pressed: " + key
+        } else {
+            config[0].msg = "No Key Pressed!"
+        }
+    }, 100)
 }
+
+var Keypad = require("rpi-keypad")
+var input = new Keypad(
+    [
+        ["1", "2", "3", "A"],
+        ["4", "5", "6", "B"],
+        ["7", "8", "9", "C"],
+        ["*", "0", "#", "D"],
+    ], // keypad layout
+    [25, 8, 7, 1], // row GPIO pins
+    [12, 16, 20, 21] // colum GPIO pins
+)
+
 
 function displayText(msg, line, tick) {
     cfg = config[line];
