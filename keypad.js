@@ -11,7 +11,7 @@
 const { Board, LCD, Pin, Buttons } = require("johnny-five");
 const { RaspiIO } = require("raspi-io");
 const { execSync } = require("child_process");
-const utils = require("./utils");
+const { Sleep } = require('./utility')
 
 const board = new Board({
     io: new RaspiIO(),
@@ -69,7 +69,7 @@ board.on("ready", () => {
         keypad.pins.rows.forEach((pin) => { pin.low() });
 
         // required wait (for pin creation & pin.low() propagation?)
-        await utils.sleep(50);
+        await Sleep(50);
 
         keypad.pins.cols.on("down", function(button) {
             // send column index as parameter to checkRow()
@@ -108,7 +108,7 @@ board.on("ready", () => {
         keypad.pins.cols.forEach((pin) => { pin.low() });
 
         // required wait (for pin creation & pin.low() propagation?)
-        await utils.sleep(50);
+        await Sleep(50);
 
         rowPressed = null;
 
