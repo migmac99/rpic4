@@ -142,6 +142,7 @@ board.on("ready", () => {
 
     function showKeyPressed() {
         let char = keys[rowPressed][colPressed];
+        console.log(`Key [${char}]`);
         console.log(`Row [${rowPressed}]`);
         console.log(`Col [${colPressed}]`);
         console.log(``)
