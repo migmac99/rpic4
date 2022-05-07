@@ -26,6 +26,7 @@ This creates a node.js server
     #!/bin/sh
 
     cd home/pi/rpic4
+    npm i
     nodemon index.js
     ```
 ```sudo chmod +x /home/pi/StartupScript.sh```

@@ -1,3 +1,4 @@
+#!/bin/bash
 
 git checkout -b master
 git remote update
