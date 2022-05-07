@@ -1,7 +1,7 @@
 const { LogRunning, LogCheck, LogCustom, colors } = require('./logging')
 const { Sleep, ReverseString } = require('./utility')
 
-const { Board, LCD, Pin, Buttons } = require("johnny-five");
+const { Board, Pin, Buttons } = require("johnny-five");
 const { RaspiIO } = require("raspi-io");
 const { execSync } = require("child_process");
 
