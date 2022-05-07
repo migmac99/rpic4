@@ -85,25 +85,26 @@ const keys = [
     ["*", "0", "#", "D"],
 ]
 
-var gpio = require('rpi-gpio')
+const Gpio = require('onoff').Gpio;
 
-function readInput(pin, err) {
-    if (err) throw err
-    gpio.read(pin, function(err, value) {
-        if (err) throw err
-        console.log('The value is ' + value)
+const buttons = [
+    new Gpio(16, 'in', 'both'),
+    new Gpio(13, 'in', 'both'),
+    new Gpio(6, 'in', 'both'),
+    new Gpio(12, 'in', 'both'),
+    new Gpio(21, 'in', 'both'),
+    new Gpio(26, 'in', 'both'),
+    new Gpio(20, 'in', 'both'),
+    new Gpio(19, 'in', 'both'),
+]
+
+for (let i = 0; i < buttons.length; i++) {
+    buttons[i].watch((err, value) => {
+        LogCustom('  DEBUG ', colors.cyan, `Button Value => [${value}]`)
     })
 }
 
-gpio.setup(16, gpio.DIR_IN, readInput(16))
-gpio.setup(13, gpio.DIR_IN, readInput(13))
-gpio.setup(16, gpio.DIR_IN, readInput(16))
-gpio.setup(12, gpio.DIR_IN, readInput(12))
-
-gpio.setup(21, gpio.DIR_IN, readInput(21))
-gpio.setup(26, gpio.DIR_IN, readInput(26))
-gpio.setup(20, gpio.DIR_IN, readInput(20))
-gpio.setup(19, gpio.DIR_IN, readInput(19))
+// button.watch((err, value) => led.writeSync(value));
 
 
 ////////////////////////////////////////////////////////////////////////
