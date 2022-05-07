@@ -95,6 +95,8 @@ C2 = 26
 C3 = 20
 C4 = 19
 
+const GPIO = require('rpi-gpio')
+
 GPIO.setwarnings(False)
 GPIO.setmode(GPIO.BOARD)
 
