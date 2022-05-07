@@ -11,7 +11,7 @@
 const { Board, LCD, Pin, Buttons } = require("johnny-five");
 const { RaspiIO } = require("raspi-io");
 const { execSync } = require("child_process");
-const { Sleep } = require('./utility')
+const utils = require("./utils");
 
 const board = new Board({
     io: new RaspiIO(),
