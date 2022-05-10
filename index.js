@@ -63,6 +63,8 @@ function start() {
     config[1].scrollSpeed = 500
 
     LogCustom('  DEBUG ', colors.cyan, 'Config:', config)
+
+    setup()
 }
 
 
@@ -85,15 +87,15 @@ const keys = [
     ["*", "0", "#", "D"],
 ]
 
-let L1 = 16
-let L2 = 13
-let L3 = 6
-let L4 = 12
+// let L1 = 16
+// let L2 = 13
+// let L3 = 6
+// let L4 = 12
 
-let C1 = 21
-let C2 = 26
-let C3 = 20
-let C4 = 19
+// let C1 = 21
+// let C2 = 26
+// let C3 = 20
+// let C4 = 19
 
 const GPIO = require('rpi-gpio')
 
@@ -168,6 +170,96 @@ const GPIO = require('rpi-gpio')
 
 // button.watch((err, value) => led.writeSync(value));
 
+const Gpio = require('onoff').Gpio;
+
+const _ROWS = [16, 13, 6, 12]
+const _COLS = [21, 26, 20, 19]
+
+
+function setup() {
+    //Make column pins output
+    new Gpio(_COLS[0], 'in', 'both')
+    new Gpio(_COLS[1], 'in', 'both')
+    new Gpio(_COLS[2], 'in', 'both')
+    new Gpio(_COLS[3], 'in', 'both')
+
+    //Make row pins input
+    new Gpio(_ROWS[0], 'in', 'both')
+    new Gpio(_ROWS[1], 'in', 'both')
+    new Gpio(_ROWS[2], 'in', 'both')
+    new Gpio(_ROWS[3], 'in', 'both')
+}
+
+function loop() {
+    digitalWrite(_COLS[0], HIGH)
+    digitalWrite(_COLS[1], LOW)
+    digitalWrite(_COLS[2], LOW)
+    digitalWrite(_COLS[3], LOW)
+    let value = '1 EMPTY'
+    if (digitalRead(_ROWS[0]) == HIGH && digitalRead(_ROWS[1]) == LOW && digitalRead(_ROWS[2]) == LOW && digitalRead(_ROWS[3]) == LOW) {
+        value = "1"
+    } else if (digitalRead(_ROWS[0]) == LOW && digitalRead(_ROWS[1]) == HIGH && digitalRead(_ROWS[2]) == LOW && digitalRead(_ROWS[3]) == LOW) {
+        value = "4"
+    } else if (digitalRead(_ROWS[0]) == LOW && digitalRead(_ROWS[1]) == LOW && digitalRead(_ROWS[2]) == HIGH && digitalRead(_ROWS[3]) == LOW) {
+        value = "7"
+    } else if (digitalRead(_ROWS[0]) == LOW && digitalRead(_ROWS[1]) == LOW && digitalRead(_ROWS[2]) == LOW && digitalRead(_ROWS[3]) == HIGH) {
+        value = "*"
+    } else {}
+    LogCustom(`  GPIO  `, colors.cyan, `[${returnPin(i)}] Value => [${value}]`)
+    Sleep(100)
+
+    digitalWrite(_COLS[0], LOW)
+    digitalWrite(_COLS[1], HIGH)
+    digitalWrite(_COLS[2], LOW)
+    digitalWrite(_COLS[3], LOW)
+    value = '2 EMPTY'
+    if (digitalRead(_ROWS[0]) == HIGH && digitalRead(_ROWS[1]) == LOW && digitalRead(_ROWS[2]) == LOW && digitalRead(_ROWS[3]) == LOW) {
+        value = "2"
+    } else if (digitalRead(_ROWS[0]) == LOW && digitalRead(_ROWS[1]) == HIGH && digitalRead(_ROWS[2]) == LOW && digitalRead(_ROWS[3]) == LOW) {
+        value = "5"
+    } else if (digitalRead(_ROWS[0]) == LOW && digitalRead(_ROWS[1]) == LOW && digitalRead(_ROWS[2]) == HIGH && digitalRead(_ROWS[3]) == LOW) {
+        value = "8"
+    } else if (digitalRead(_ROWS[0]) == LOW && digitalRead(_ROWS[1]) == LOW && digitalRead(_ROWS[2]) == LOW && digitalRead(_ROWS[3]) == HIGH) {
+        value = "0"
+    } else {}
+    LogCustom(`  GPIO  `, colors.cyan, `[${returnPin(i)}] Value => [${value}]`)
+    Sleep(100)
+
+    digitalWrite(_COLS[0], LOW)
+    digitalWrite(_COLS[1], LOW)
+    digitalWrite(_COLS[2], HIGH)
+    digitalWrite(_COLS[3], LOW)
+
+    value = '3 EMPTY'
+    if (digitalRead(_ROWS[0]) == HIGH && digitalRead(_ROWS[1]) == LOW && digitalRead(_ROWS[2]) == LOW && digitalRead(_ROWS[3]) == LOW) {
+        value = '3'
+    } else if (digitalRead(_ROWS[0]) == LOW && digitalRead(_ROWS[1]) == HIGH && digitalRead(_ROWS[2]) == LOW && digitalRead(_ROWS[3]) == LOW) {
+        value = '6'
+    } else if (digitalRead(_ROWS[0]) == LOW && digitalRead(_ROWS[1]) == LOW && digitalRead(_ROWS[2]) == HIGH && digitalRead(_ROWS[3]) == LOW) {
+        value = '9'
+    } else if (digitalRead(_ROWS[0]) == LOW && digitalRead(_ROWS[1]) == LOW && digitalRead(_ROWS[2]) == LOW && digitalRead(_ROWS[3]) == HIGH) {
+        value = '#'
+    } else {}
+    LogCustom(`  GPIO  `, colors.cyan, `[${returnPin(i)}] Value => [${value}]`)
+    Sleep(100)
+
+    digitalWrite(_COLS[0], LOW)
+    digitalWrite(_COLS[1], LOW)
+    digitalWrite(_COLS[2], LOW)
+    digitalWrite(_COLS[3], HIGH)
+    value = '4 EMPTY'
+    if (digitalRead(_ROWS[0]) == HIGH && digitalRead(_ROWS[1]) == LOW && digitalRead(_ROWS[2]) == LOW && digitalRead(_ROWS[3]) == LOW) {
+        value = 'A'
+    } else if (digitalRead(_ROWS[0]) == LOW && digitalRead(_ROWS[1]) == HIGH && digitalRead(_ROWS[2]) == LOW && digitalRead(_ROWS[3]) == LOW) {
+        value = 'B'
+    } else if (digitalRead(_ROWS[0]) == LOW && digitalRead(_ROWS[1]) == LOW && digitalRead(_ROWS[2]) == HIGH && digitalRead(_ROWS[3]) == LOW) {
+        value = 'C'
+    } else if (digitalRead(_ROWS[0]) == LOW && digitalRead(_ROWS[1]) == LOW && digitalRead(_ROWS[2]) == LOW && digitalRead(_ROWS[3]) == HIGH) {
+        value = 'D'
+    } else {}
+    LogCustom(`  GPIO  `, colors.cyan, `[${returnPin(i)}] Value => [${value}]`)
+    Sleep(100)
+}
 
 ////////////////////////////////////////////////////////////////////////
 
@@ -181,6 +273,7 @@ function update(line, tick) {
     setTimeout(() => { update(line, nextTick) }, cfg.scrollSpeed)
     displayText(cfg.msg, line, tick)
 
+    loop()
 
     // config[0].msg = "Key pressed: " + key
 }
